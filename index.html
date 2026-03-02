@@ -6,7 +6,7 @@
     <title>My Multi-Lang App</title>
     <link rel="manifest" href="manifest.json">
     <style>
-        :root { --primary: #2563eb; --bg: #f1f5f9; }
+        :root { --primary: #ED0B3F; --bg: #0A111A; }
         body { font-family: -apple-system, sans-serif; margin: 0; display: flex; flex-direction: column; height: 100vh; background: var(--bg); overflow: hidden; }
         
         /* Header */
@@ -22,7 +22,7 @@
         /* Navigation Tabs */
         nav { display: flex; background: white; border-bottom: 1px solid #e2e8f0; }
         nav button { flex: 1; padding: 14px; border: none; cursor: pointer; background: none; color: #64748b; font-weight: 600; border-bottom: 3px solid transparent; transition: 0.3s; }
-        nav button.active { border-bottom: 3px solid var(--primary); color: var(--primary); background: #eff6ff; }
+        nav button.active { border-bottom: 3px solid var(--primary); color: var(--primary); background: #0A111A; }
 
         /* Content Iframe */
         #content-frame { flex-grow: 1; border: none; width: 100%; background: white; }
@@ -46,9 +46,9 @@
 </header>
 
 <nav>
-    <button class="tab active" onclick="changePage(1)">Background</button>
-    <button class="tab" onclick="changePage(2)">Main Ideas</button>
-    <button class="tab" onclick="changePage(3)">Further Discussions</button>
+    <button class="tab active" onclick="changePage(1)"></button>
+    <button class="tab" onclick="changePage(2)"></button>
+    <button class="tab" onclick="changePage(3)"></button>
 </nav>
 
 <iframe id="content-frame" src=""></iframe>
