@@ -3,8 +3,8 @@
   "short_name": "LangApp",
   "start_url": "index.html",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#2563eb",
+  "background_color": "#0A111A",
+  "theme_color": "#ED0B3F",
   "icons": [
     {
       "src": "https://cdn-icons-png.flaticon.com/512/1160/1160358.png",
