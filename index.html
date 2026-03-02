@@ -3,41 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Multi-Lang App</title>
+    <title>My Language App</title>
     <link rel="manifest" href="manifest.json">
     <style>
-        :root { --primary: #ED0B3F; --bg: #0A111A; }
-        body { font-family: -apple-system, sans-serif; margin: 0; display: flex; flex-direction: column; height: 100vh; background: var(--bg); overflow: hidden; }
+        :root { 
+            --bg: #0A111A; 
+            --primary: #ed0b3f; 
+            --surface: #16202c;
+            --text: #ffffff;
+            --text-dim: #94a3b8;
+        }
+
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+            margin: 0; 
+            display: flex; 
+            flex-direction: column; 
+            height: 100vh; 
+            background: var(--bg); 
+            color: var(--text);
+            overflow: hidden; 
+        }
         
-        /* Header */
-        header { background: white; border-bottom: 1px solid #e2e8f0; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-weight: 800; color: var(--primary); font-size: 1.1rem; letter-spacing: -0.5px; }
-        .controls { display: flex; gap: 12px; }
+        /* Header Area */
+        header { 
+            background: var(--bg); 
+            border-bottom: 1px solid #1e293b; 
+            padding: 15px 20px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        .logo { font-weight: 800; color: var(--primary); font-size: 1.2rem; letter-spacing: 1px; }
+        .controls { display: flex; gap: 15px; }
         
-        /* Buttons & Icons */
-        .icon-btn { background: #f8fafc; border: 1px solid #e2e8f0; cursor: pointer; padding: 8px; border-radius: 8px; display: flex; align-items: center; color: #475569; transition: all 0.2s; }
-        .icon-btn:hover { background: #f1f5f9; color: var(--primary); border-color: var(--primary); }
+        /* Buttons */
+        .icon-btn { 
+            background: var(--surface); 
+            border: 1px solid #334155; 
+            cursor: pointer; 
+            padding: 10px; 
+            border-radius: 12px; 
+            display: flex; 
+            align-items: center; 
+            color: var(--text); 
+            transition: all 0.2s ease;
+        }
+        .icon-btn:hover { border-color: var(--primary); transform: translateY(-2px); }
+        .icon-btn:active { transform: translateY(0); }
         .icon-btn svg { width: 24px; height: 24px; fill: currentColor; }
+        .icon-btn.active-lang { color: var(--primary); border-color: var(--primary); }
 
         /* Navigation Tabs */
-        nav { display: flex; background: white; border-bottom: 1px solid #0A111A; }
-        nav button { flex: 1; padding: 14px; border: none; cursor: pointer; background: none; color: #0A111A; font-weight: 600; border-bottom: 3px solid transparent; transition: 0.3s; }
-        nav button.active { border-bottom: 3px solid var(--primary); color: var(--primary); background: #0A111A; }
+        nav { display: flex; background: var(--bg); border-bottom: 1px solid #1e293b; }
+        nav button { 
+            flex: 1; 
+            padding: 16px; 
+            border: none; 
+            cursor: pointer; 
+            background: none; 
+            color: var(--text-dim); 
+            font-weight: 600; 
+            font-size: 0.9rem;
+            border-bottom: 3px solid transparent; 
+            transition: 0.3s; 
+        }
+        nav button.active { 
+            border-bottom: 3px solid var(--primary); 
+            color: var(--primary); 
+            background: linear-gradient(to bottom, transparent, rgba(237, 11, 63, 0.1));
+        }
 
         /* Content Iframe */
-        #content-frame { flex-grow: 1; border: none; width: 100%; background: white; }
+        #content-frame { 
+            flex-grow: 1; 
+            border: none; 
+            width: 100%; 
+            background: white; /* Content files usually have white backgrounds */
+        }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="logo">Goldenreads</div>
+    <div class="logo">LEARN PRO</div>
     <div class="controls">
-        <!-- Language Toggle Icon -->
-        <button class="icon-btn" onclick="toggleLanguage()" title="Switch Language">
+        <!-- Language Button -->
+        <button class="icon-btn" id="langBtn" onclick="toggleLanguage()" title="Switch Language">
             <svg viewBox="0 0 24 24"><path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>
         </button>
-        <!-- Audio Play/Pause Icon -->
+        <!-- Audio Button -->
         <button class="icon-btn" id="audioBtn" onclick="toggleAudio()" title="Play/Pause Audio">
             <svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
             <svg id="pauseIcon" viewBox="0 0 24 24" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
@@ -46,17 +101,16 @@
 </header>
 
 <nav>
-    <button class="tab active" onclick="changePage(1)"></button>
-    <button class="tab" onclick="changePage(2)"></button>
-    <button class="tab" onclick="changePage(3)"></button>
+    <button class="tab" onclick="changePage(1)">PAGE 1</button>
+    <button class="tab" onclick="changePage(2)">PAGE 2</button>
+    <button class="tab" onclick="changePage(3)">PAGE 3</button>
 </nav>
 
-<iframe id="content-frame" src=""></iframe>
-<audio id="audioPlayer" loop></audio>
+<iframe id="content-frame"></iframe>
+<audio id="audioPlayer" loop preload="auto"></audio>
 
 <script>
-    // Config for files in the SAME folder
-    const fileMapping = {
+    const config = {
         en: { pages: ["en1.html", "en2.html", "en3.html"], audio: "audio_en.wav" },
         hi: { pages: ["hi1.html", "hi2.html", "hi3.html"], audio: "audio_hi.wav" }
     };
@@ -66,18 +120,25 @@
     const audioPlayer = document.getElementById('audioPlayer');
 
     function updateUI() {
-        // Change the content inside the frame
-        document.getElementById('content-frame').src = fileMapping[currentLang].pages[currentPage - 1];
+        const frame = document.getElementById('content-frame');
+        const langBtn = document.getElementById('langBtn');
         
-        // Update Audio source
+        // Update Frame
+        frame.src = config[currentLang].pages[currentPage - 1];
+        
+        // Update Audio
         const wasPlaying = !audioPlayer.paused;
-        audioPlayer.src = fileMapping[currentLang].audio;
+        audioPlayer.src = config[currentLang].audio;
+        audioPlayer.load(); // Vital for .wav
         if (wasPlaying) audioPlayer.play();
 
-        // Highlight active tab
+        // Update Nav Tabs
         document.querySelectorAll('.tab').forEach((btn, i) => {
             btn.classList.toggle('active', i === (currentPage - 1));
         });
+
+        // Toggle visual state of lang button
+        langBtn.classList.toggle('active-lang', currentLang === 'hi');
     }
 
     function toggleLanguage() {
@@ -93,22 +154,24 @@
     function toggleAudio() {
         const playIcon = document.getElementById('playIcon');
         const pauseIcon = document.getElementById('pauseIcon');
+        const btn = document.getElementById('audioBtn');
         
         if (audioPlayer.paused) {
-            audioPlayer.play();
+            audioPlayer.play().catch(() => alert("Please tap the screen first to allow audio."));
             playIcon.style.display = "none";
             pauseIcon.style.display = "block";
+            btn.style.color = "var(--primary)";
         } else {
             audioPlayer.pause();
             playIcon.style.display = "block";
             pauseIcon.style.display = "none";
+            btn.style.color = "var(--text)";
         }
     }
 
-    // Load initial page
     window.onload = updateUI;
 
-    // Register simple Service Worker for PWA installation
+    // PWA Service Worker
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('data:application/javascript;base64,c2VsZi5hZGRFdmVudExpc3RlbmVyKCdmZXRjaCcsIChlKSA9PiB7fSk7');
     }
