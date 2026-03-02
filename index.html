@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Multi-Lang App</title>
+    <link rel="manifest" href="manifest.json">
+    <style>
+        :root { --primary: #2563eb; --bg: #f1f5f9; }
+        body { font-family: -apple-system, sans-serif; margin: 0; display: flex; flex-direction: column; height: 100vh; background: var(--bg); overflow: hidden; }
+        
+        /* Header */
+        header { background: white; border-bottom: 1px solid #e2e8f0; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-weight: 800; color: var(--primary); font-size: 1.1rem; letter-spacing: -0.5px; }
+        .controls { display: flex; gap: 12px; }
+        
+        /* Buttons & Icons */
+        .icon-btn { background: #f8fafc; border: 1px solid #e2e8f0; cursor: pointer; padding: 8px; border-radius: 8px; display: flex; align-items: center; color: #475569; transition: all 0.2s; }
+        .icon-btn:hover { background: #f1f5f9; color: var(--primary); border-color: var(--primary); }
+        .icon-btn svg { width: 24px; height: 24px; fill: currentColor; }
+
+        /* Navigation Tabs */
+        nav { display: flex; background: white; border-bottom: 1px solid #e2e8f0; }
+        nav button { flex: 1; padding: 14px; border: none; cursor: pointer; background: none; color: #64748b; font-weight: 600; border-bottom: 3px solid transparent; transition: 0.3s; }
+        nav button.active { border-bottom: 3px solid var(--primary); color: var(--primary); background: #eff6ff; }
+
+        /* Content Iframe */
+        #content-frame { flex-grow: 1; border: none; width: 100%; background: white; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">LEARN APP</div>
+    <div class="controls">
+        <!-- Language Toggle Icon -->
+        <button class="icon-btn" onclick="toggleLanguage()" title="Switch Language">
+            <svg viewBox="0 0 24 24"><path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>
+        </button>
+        <!-- Audio Play/Pause Icon -->
+        <button class="icon-btn" id="audioBtn" onclick="toggleAudio()" title="Play/Pause Audio">
+            <svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg id="pauseIcon" viewBox="0 0 24 24" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+        </button>
+    </div>
+</header>
+
+<nav>
+    <button class="tab active" onclick="changePage(1)">PAGE 1</button>
+    <button class="tab" onclick="changePage(2)">PAGE 2</button>
+    <button class="tab" onclick="changePage(3)">PAGE 3</button>
+</nav>
+
+<iframe id="content-frame" src=""></iframe>
+<audio id="audioPlayer" loop></audio>
+
+<script>
+    // Config for files in the SAME folder
+    const fileMapping = {
+        en: { pages: ["en1.html", "en2.html", "en3.html"], audio: "audio_en.mp3" },
+        hi: { pages: ["hi1.html", "hi2.html", "hi3.html"], audio: "audio_hi.mp3" }
+    };
+
+    let currentLang = 'en';
+    let currentPage = 1;
+    const audioPlayer = document.getElementById('audioPlayer');
+
+    function updateUI() {
+        // Change the content inside the frame
+        document.getElementById('content-frame').src = fileMapping[currentLang].pages[currentPage - 1];
+        
+        // Update Audio source
+        const wasPlaying = !audioPlayer.paused;
+        audioPlayer.src = fileMapping[currentLang].audio;
+        if (wasPlaying) audioPlayer.play();
+
+        // Highlight active tab
+        document.querySelectorAll('.tab').forEach((btn, i) => {
+            btn.classList.toggle('active', i === (currentPage - 1));
+        });
+    }
+
+    function toggleLanguage() {
+        currentLang = (currentLang === 'en') ? 'hi' : 'en';
+        updateUI();
+    }
+
+    function changePage(p) { 
+        currentPage = p; 
+        updateUI(); 
+    }
+
+    function toggleAudio() {
+        const playIcon = document.getElementById('playIcon');
+        const pauseIcon = document.getElementById('pauseIcon');
+        
+        if (audioPlayer.paused) {
+            audioPlayer.play();
+            playIcon.style.display = "none";
+            pauseIcon.style.display = "block";
+        } else {
+            audioPlayer.pause();
+            playIcon.style.display = "block";
+            pauseIcon.style.display = "none";
+        }
+    }
+
+    // Load initial page
+    window.onload = updateUI;
+
+    // Register simple Service Worker for PWA installation
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('data:application/javascript;base64,c2VsZi5hZGRFdmVudExpc3RlbmVyKCdmZXRjaCcsIChlKSA9PiB7fSk7');
+    }
+</script>
+</body>
+</html>

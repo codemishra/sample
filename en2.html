@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Good to Great - Main Ideas</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800&family=Lora:ital,wght@0,400;1,600&display=swap" rel="stylesheet">
+
+    <style>
+        /* CSS Variables for Light/Dark Mode Support */
+        :root {
+            /* Light Mode Defaults */
+            --bg: #fdf7f8;
+            --text: #1a1a1a;
+            --text-muted: #4a4a4a;
+            --primary: #D32F2F; 
+            --secondary: #E64A19;
+            --grid: rgba(0, 0, 0, 0.05);
+            --box-bg: #ffffff;
+            --box-border: rgba(0, 0, 0, 0.1);
+            --box-shadow: rgba(0, 0, 0, 0.1);
+            --canvas-text: #1a1a1a;
+            --gauge-bg: rgba(0, 0, 0, 0.05);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                /* Dark Mode Overrides */
+                --bg: #0a111a;
+                --text: #EBEFF5;
+                --text-muted: #A0ABC0;
+                --primary: #ED0A3F;
+                --secondary: #f67520;
+                --grid: rgba(255, 255, 255, 0.04);
+                --box-bg: #0a111a;
+                --box-border: rgba(255, 255, 255, 0.1);
+                --box-shadow: rgba(0, 0, 0, 0.8);
+                --canvas-text: #EBEFF5;
+                --gauge-bg: rgba(255, 255, 255, 0.1);
+            }
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 24px;
+            display: flex;
+            justify-content: center;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .content-container {
+            max-width: 680px; 
+            width: 100%;
+        }
+
+        /* Typography */
+        h2 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 22px;
+            color: var(--text);
+            margin-top: 60px;
+            margin-bottom: 24px;
+            line-height: 1.4;
+        }
+
+        /* Remove top margin for the very first heading */
+        h2:first-of-type {
+            margin-top: 20px;
+        }
+
+        p {
+            font-family: 'Lora', serif;
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 1.618;
+            color: var(--text);
+            margin-bottom: 24px;
+        }
+
+        /* The Brand Visual Box */
+        .visual-box-container {
+            display: flex;
+            justify-content: center;
+            margin: 40px 0;
+        }
+
+        .visual-box {
+            background-color: var(--box-bg);
+            border-radius: 24px;
+            width: 360px;
+            height: 240px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid var(--box-border);
+            box-shadow: 0 20px 40px var(--box-shadow);
+            
+            /* The 12-Unit Grid Background */
+            background-image: 
+                linear-gradient(var(--grid) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+            background-size: 30px 30px;
+            transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Floating Label UI */
+        .status-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-family: 'Inter', sans-serif;
+            font-size: 9px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text);
+            opacity: 0.5;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="content-container">
+        
+        <!-- MAIN IDEA 1 -->
+        <h2>🏔️ Level 5 Leadership: The Paradox of Humility and Will</h2>
+        <p>One of the most surprising discoveries of Collins’ research was the distinct profile of the leaders who engineered the leap from good to great. Contrary to the popular myth of the charismatic, high-profile "celebrity CEO" brought in to save a dying company, the leaders of the great companies were strikingly anti-heroic. They were self-effacing, quiet, reserved, and almost shy. Collins termed this "Level 5 Leadership," which he defines as a rare and paradoxical blend of intense professional will and deep personal humility. Their ambition is directed first and foremost toward the institution and its success, not themselves.</p>
+        <p>A defining characteristic of a Level 5 Leader is encapsulated in the "Window and the Mirror" metaphor. When things go spectacularly well, these leaders look out the window to apportion credit to factors outside themselves—their team, external circumstances, or even plain luck. However, when things go poorly, they look in the mirror to assign responsibility. They never blame bad luck, market conditions, or other people for their failures. This unflinching accountability creates an organizational culture where truth is spoken freely and errors are corrected rapidly without fear of tyrannical retribution.</p>
+        
+        <div class="visual-box-container">
+            <div class="visual-box">
+                <div class="status-badge">Simulation: The Level 5 Hierarchy</div>
+                <canvas id="canvasLevel5"></canvas>
+            </div>
+        </div>
+        
+        <p>To understand the sheer power of Level 5, one must contrast it with "Level 4" leadership—the effective, but highly ego-centric leader. Level 4 leaders often possess the sheer force of personality to drive a company to greatness during their tenure. However, because their primary ambition is personal validation, they rarely set up the company for sustained success after their departure. They want to be the indispensable genius with a thousand helpers. Level 5 leaders, conversely, operate with a fierce resolve to do whatever it takes to make the company great, which includes setting up their successors for even greater success. They build an enduring clock, rather than just telling the time.</p>
+
+        <!-- MAIN IDEA 2 -->
+        <h2>🚌 First Who, Then What: Getting the Right People on the Bus</h2>
+        <p>Conventional wisdom dictates that a great leader first sets a new, brilliant vision and strategy, and then finds the people required to execute it. Collins found that the leaders of Good-to-Great companies did the exact opposite: they started with the "who" before the "what." Before they even figured out where to drive the bus, they focused relentlessly on getting the right people on the bus, the wrong people off the bus, and the right people in the right seats. Only after assembling a superior executive team did they collectively decide where the best path forward lay.</p>
+        <p>This approach fundamentally shifts how organizations handle change and motivation. If you have the right people on the bus, the problem of how to motivate and manage them largely disappears. The right people are self-motivated by the inner drive to produce the best results and to be part of creating something great. Conversely, if you have the wrong people, it doesn't matter whether you discover the right direction; you still won't achieve greatness. Collins emphasizes that "who" questions must take precedence over "what" questions—be it strategy, structure, tactics, or technology.</p>
+        
+        <div class="visual-box-container">
+            <div class="visual-box">
+                <div class="status-badge">Simulation: Talent Sorting</div>
+                <canvas id="canvasFirstWho"></canvas>
+            </div>
+        </div>
+        
+        <p>To implement this, Good-to-Great companies cultivate a rigorous, but not ruthless, culture. Being ruthless means hacking and slashing without thought, especially during tough times. Being rigorous means consistently applying exacting standards at all levels, particularly in upper management. Collins identifies three practical disciplines for being rigorous: First, when in doubt, don't hire—keep looking. Second, when you know you need to make a people change, act. Third, put your best people on your biggest opportunities, not your biggest problems. Managing problems can only make you good; building opportunities is the only way to become great.</p>
+
+        <!-- MAIN IDEA 3 -->
+        <h2>🪞 Confront the Brutal Facts: The Stockdale Paradox</h2>
+        <p>Breakthrough results cannot be achieved by organizations that operate in a state of delusion. Collins found that all good-to-great companies embraced a culture where the truth was heard and confronted directly. They didn't rely on motivational cheerleading or false optimism. Instead, they infused their entire process with the brutal facts of their current reality. When you start with an honest, unvarnished look at the facts, the right decisions often become self-evident. However, creating a climate where the truth is heard requires specific leadership behaviors: leading with questions rather than answers, engaging in intense dialogue and debate rather than coercion, and conducting post-mortems without laying blame.</p>
+        <p>This mindset is perfectly encapsulated in what Collins named "The Stockdale Paradox," inspired by Admiral Jim Stockdale, the highest-ranking United States military officer in the "Hanoi Hilton" prisoner-of-war camp during the Vietnam War. When asked who didn't make it out of the camp, Stockdale famously replied, "Oh, that’s easy, the optimists." The optimists believed they would be out by Christmas, then Easter, then Thanksgiving, and when those dates passed, they died of a broken heart. The survivors, conversely, maintained a delicate psychological duality.</p>
+        
+        <div class="visual-box-container">
+            <div class="visual-box">
+                <div class="status-badge">Simulation: The Stockdale Paradox</div>
+                <canvas id="canvasStockdale"></canvas>
+            </div>
+        </div>
+        
+        <p>The Stockdale Paradox demands that you must retain absolute faith that you can and will prevail in the end, regardless of the difficulties. At the exact same time, you must confront the most brutal facts of your current reality, whatever they might be. This is not a balancing act, but rather the simultaneous holding of two contradictory states of mind. Great companies do not let unwavering faith blind them to immediate, harsh truths, nor do they let the brutal realities erode their long-term belief in ultimate victory. This psychological hardiness is the bedrock upon which all enduring greatness is built.</p>
+
+        <!-- MAIN IDEA 4 -->
+        <h2>🦔 The Hedgehog Concept: Simplicity Within the Three Circles</h2>
+        <p>In a famous essay, Isaiah Berlin divided the world into hedgehogs and foxes. The fox is a cunning creature that knows many things, views the world in all its complexity, and pursues a myriad of simultaneous strategies. The hedgehog, on the other hand, knows one big thing and simplifies a complex world into a single, organizing principle that guides everything. Collins found that the leaders of the Good-to-Great companies were essentially hedgehogs. They drove their organizations not through scattered, complex machinations, but through the piercing clarity of the "Hedgehog Concept."</p>
+        <p>A Hedgehog Concept is not an arbitrary goal or a visionary strategy; it is a profound understanding derived from the intersection of three deeply integrated circles. The first circle asks: <em>What are you deeply passionate about?</em> You cannot manufacture passion; you can only discover what naturally ignites your organization. The second circle asks: <em>What can you be the best in the world at?</em> This is a sobering standard. It goes beyond core competence; just because you have been doing something for years does not mean you can be the best in the world at it. The third circle asks: <em>What drives your economic engine?</em> You must identify the single most impactful denominator—profit per X—that yields the greatest sustainable cash flow.</p>
+        
+        <div class="visual-box-container">
+            <div class="visual-box">
+                <div class="status-badge">Simulation: The Three Circles</div>
+                <canvas id="canvasHedgehog"></canvas>
+            </div>
+        </div>
+        
+        <p>The comparison companies often operated like foxes, scattering their energy across diverse, unaligned pursuits simply because they represented growth opportunities. Greatness, conversely, requires the extraordinary discipline to say "no" to opportunities that fail the three-circle test. Once a company identifies its Hedgehog Concept, every decision—from acquisitions to hiring to resource allocation—is measured against it. The pursuit of this single, crystalline concept transforms an organization from a sprawling, unfocused entity into an unstoppable, compounding force.</p>
+
+    </div>
+
+    <!-- CANVAS ANIMATION SCRIPTS -->
+    <script>
+        // Global Theme Helper
+        function getThemeColor(varName) {
+            return getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+        }
+
+        // ==========================================
+        // IDEA 1: Level 5 Leadership Script
+        // ==========================================
+        (function() {
+            const canvas = document.getElementById('canvasLevel5');
+            const ctx = canvas.getContext('2d');
+            const WIDTH = 360, HEIGHT = 240, DURATION = 6000;
+            canvas.width = WIDTH; canvas.height = HEIGHT;
+
+            let startTime = null;
+            const layers = [
+                { level: 1, label: "CAPABLE", yBottom: 210, yTop: 180, widthBottom: 240, widthTop: 190 },
+                { level: 2, label: "CONTRIBUTING", yBottom: 175, yTop: 145, widthBottom: 180, widthTop: 130 },
+                { level: 3, label: "COMPETENT", yBottom: 140, yTop: 110, widthBottom: 120, widthTop: 70 },
+                { level: 4, label: "EFFECTIVE", yBottom: 105, yTop: 75, widthBottom: 60, widthTop: 10 },
+                { level: 5, label: "LEVEL 5", yBottom: 70, yTop: 40, widthBottom: 0, widthTop: 0 }
+            ];
+
+            function drawLayer(layer, progress, isLevel5, primaryColor, textColor) {
+                const centerX = WIDTH / 2;
+                ctx.beginPath();
+                if (isLevel5) {
+                    ctx.moveTo(centerX - 25, layer.yBottom);
+                    ctx.lineTo(centerX + 25, layer.yBottom);
+                    ctx.lineTo(centerX, layer.yTop);
+                    ctx.fillStyle = primaryColor;
+                    ctx.globalAlpha = Math.min(1, progress * 2);
+                    ctx.shadowColor = primaryColor;
+                    ctx.shadowBlur = 15;
+                    ctx.fill();
+                    ctx.shadowBlur = 0;
+                } else {
+                    ctx.moveTo(centerX - layer.widthBottom / 2, layer.yBottom);
+                    ctx.lineTo(centerX + layer.widthBottom / 2, layer.yBottom);
+                    ctx.lineTo(centerX + layer.widthTop / 2, layer.yTop);
+                    ctx.lineTo(centerX - layer.widthTop / 2, layer.yTop);
+                    ctx.fillStyle = textColor;
+                    ctx.globalAlpha = 0.1 + (progress * 0.2);
+                    ctx.fill();
+                }
+                
+                ctx.closePath();
+                ctx.strokeStyle = isLevel5 ? primaryColor : textColor;
+                ctx.lineWidth = 2;
+                ctx.globalAlpha = progress > 0.5 ? 1 : progress * 2;
+                ctx.stroke();
+
+                if (progress > 0.8) {
+                    ctx.fillStyle = isLevel5 ? "#ffffff" : textColor;
+                    ctx.globalAlpha = (progress - 0.8) * 5;
+                    ctx.textAlign = "center";
+                    ctx.textBaseline = "middle";
+                    if (isLevel5) {
+                        ctx.font = "800 12px 'Inter', sans-serif";
+                        ctx.fillText(layer.label, centerX, layer.yBottom - 12);
+                    } else {
+                        ctx.font = "600 9px 'Inter', sans-serif";
+                        ctx.fillText(layer.label, centerX, (layer.yBottom + layer.yTop) / 2);
+                    }
+                }
+                ctx.globalAlpha = 1.0;
+            }
+
+            function draw(time) {
+                if (!startTime) startTime = time;
+                const elapsed = (time - startTime) % DURATION;
+                const progress = elapsed / DURATION;
+                ctx.clearRect(0, 0, WIDTH, HEIGHT);
+                const primaryColor = getThemeColor('--primary') || '#ED0A3F';
+                const textColor = getThemeColor('--canvas-text') || '#EBEFF5';
+
+                layers.forEach((layer, index) => {
+                    let layerProgress = 0;
+                    if (layer.level < 5) {
+                        const startThreshold = index * 0.15;
+                        if (progress > startThreshold) {
+                            layerProgress = Math.min(1, (progress - startThreshold) / 0.15);
+                        }
+                    } else {
+                        if (progress > 0.6) {
+                            layerProgress = Math.min(1, (progress - 0.6) / 0.2);
+                            if (progress > 0.8) {
+                                const pulse = Math.sin((progress - 0.8) * Math.PI * 10) * 0.2;
+                                ctx.globalAlpha = 0.8 + pulse;
+                            }
+                        }
+                    }
+                    if (layerProgress > 0) {
+                        drawLayer(layer, layerProgress, layer.level === 5, primaryColor, textColor);
+                    }
+                });
+                requestAnimationFrame(draw);
+            }
+            requestAnimationFrame(draw);
+        })();
+
+        // ==========================================
+        // IDEA 2: First Who, Then What Script
+        // ==========================================
+        (function() {
+            const canvas = document.getElementById('canvasFirstWho');
+            const ctx = canvas.getContext('2d');
+            const WIDTH = 360, HEIGHT = 240;
+            canvas.width = WIDTH; canvas.height = HEIGHT;
+
+            let particles = [];
+            let frames = 0;
+            const busX = 240, busY = 60, busW = 90, busH = 120;
+            const slots = [
+                { x: 285, y: 90, filled: false },
+                { x: 285, y: 120, filled: false },
+                { x: 285, y: 150, filled: false }
+            ];
+
+            function draw() {
+                frames++;
+                ctx.clearRect(0, 0, WIDTH, HEIGHT);
+                const primaryColor = getThemeColor('--primary') || '#ED0A3F';
+                const textColor = getThemeColor('--canvas-text') || '#EBEFF5';
+                const mutedColor = getThemeColor('--text-muted') || '#A0ABC0';
+
+                if (frames % 400 === 0) slots.forEach(s => s.filled = false);
+
+                if (frames % 40 === 0 && frames % 400 < 300) {
+                    particles.push({
+                        x: 0, y: 120,
+                        isRight: Math.random() > 0.4,
+                        slotted: false, targetSlot: null,
+                        dropSpeed: 0, alpha: 1
+                    });
+                }
+
+                ctx.strokeStyle = textColor;
+                ctx.lineWidth = 2;
+                ctx.setLineDash([4, 4]);
+                ctx.strokeRect(busX, busY, busW, busH);
+                ctx.setLineDash([]);
+                
+                slots.forEach(slot => {
+                    ctx.beginPath();
+                    ctx.arc(slot.x, slot.y, 8, 0, Math.PI * 2);
+                    ctx.strokeStyle = mutedColor;
+                    ctx.globalAlpha = 0.3;
+                    ctx.stroke();
+                    ctx.globalAlpha = 1.0;
+                });
+
+                for (let i = particles.length - 1; i >= 0; i--) {
+                    let p = particles[i];
+                    if (!p.slotted && p.dropSpeed === 0) {
+                        p.x += 2;
+                        if (p.x >= 150) {
+                            if (p.isRight) {
+                                let emptySlot = slots.find(s => !s.filled);
+                                if (emptySlot && !p.targetSlot) {
+                                    p.targetSlot = emptySlot;
+                                    emptySlot.filled = true;
+                                }
+                                if (p.targetSlot) {
+                                    p.x += (p.targetSlot.x - p.x) * 0.1;
+                                    p.y += (p.targetSlot.y - p.y) * 0.1;
+                                    if (Math.abs(p.x - p.targetSlot.x) < 2 && Math.abs(p.y - p.targetSlot.y) < 2) {
+                                        p.x = p.targetSlot.x; p.y = p.targetSlot.y; p.slotted = true;
+                                    }
+                                } else { p.x += 2; }
+                            } else { p.dropSpeed = 1; }
+                        }
+                    } else if (p.dropSpeed > 0) {
+                        p.y += p.dropSpeed; p.dropSpeed += 0.2; p.alpha -= 0.02;
+                    } else if (p.slotted && frames % 400 === 0) {
+                        p.dropSpeed = -1;
+                    } else if (p.dropSpeed < 0) {
+                        p.x += 3; p.alpha -= 0.05;
+                    }
+
+                    ctx.globalAlpha = Math.max(0, p.alpha);
+                    ctx.beginPath();
+                    if (p.isRight) {
+                        ctx.arc(p.x, p.y, 8, 0, Math.PI * 2);
+                        ctx.fillStyle = primaryColor;
+                        ctx.fill();
+                    } else {
+                        ctx.rect(p.x - 7, p.y - 7, 14, 14);
+                        ctx.strokeStyle = mutedColor;
+                        ctx.lineWidth = 2;
+                        ctx.stroke();
+                    }
+                    ctx.globalAlpha = 1.0;
+
+                    if (p.alpha <= 0 || p.x > WIDTH) particles.splice(i, 1);
+                }
+
+                ctx.fillStyle = textColor;
+                ctx.textAlign = "center";
+                ctx.font = "600 10px 'Inter', sans-serif";
+                ctx.fillText("THE BUS", busX + busW / 2, busY - 10);
+
+                requestAnimationFrame(draw);
+            }
+            requestAnimationFrame(draw);
+        })();
+
+        // ==========================================
+        // IDEA 3: The Stockdale Paradox Script
+        // ==========================================
+        (function() {
+            const canvas = document.getElementById('canvasStockdale');
+            const ctx = canvas.getContext('2d');
+            const WIDTH = 360, HEIGHT = 240;
+            canvas.width = WIDTH; canvas.height = HEIGHT;
+
+            let frames = 0, leftNeedleTarget = 0.5, leftNeedleCurrent = 0.5;
+
+            function drawGauge(x, y, radius, value, color, isJittery, label, textColor, gaugeBg) {
+                ctx.beginPath();
+                ctx.arc(x, y, radius, Math.PI, 0);
+                ctx.lineWidth = 12; ctx.strokeStyle = gaugeBg; ctx.stroke();
+
+                ctx.beginPath();
+                ctx.arc(x, y, radius, Math.PI, Math.PI + (value * Math.PI));
+                ctx.lineWidth = 12; ctx.strokeStyle = color; ctx.stroke();
+
+                ctx.save();
+                ctx.translate(x, y);
+                let needleAngle = Math.PI + (value * Math.PI);
+                if (isJittery) {
+                    needleAngle += (Math.random() - 0.5) * 0.2;
+                    needleAngle = Math.max(Math.PI, Math.min(Math.PI * 2, needleAngle));
+                }
+                ctx.rotate(needleAngle);
+                ctx.beginPath();
+                ctx.moveTo(0, 4); ctx.lineTo(radius + 10, 0); ctx.lineTo(0, -4);
+                ctx.fillStyle = textColor; ctx.fill();
+                ctx.restore();
+
+                ctx.beginPath();
+                ctx.arc(x, y, 6, 0, Math.PI * 2);
+                ctx.fillStyle = textColor; ctx.fill();
+
+                ctx.fillStyle = textColor;
+                ctx.textAlign = "center";
+                ctx.font = "700 10px 'Inter', sans-serif";
+                ctx.fillText(label, x, y + 25);
+            }
+
+            function draw() {
+                frames++;
+                ctx.clearRect(0, 0, WIDTH, HEIGHT);
+                const primaryColor = getThemeColor('--primary') || '#ED0A3F';
+                const faithColor = getThemeColor('--secondary') || '#f67520';
+                const textColor = getThemeColor('--canvas-text') || '#EBEFF5';
+                const mutedColor = getThemeColor('--text-muted') || '#A0ABC0';
+                const gaugeBg = getThemeColor('--gauge-bg') || 'rgba(0,0,0,0.1)';
+
+                if (frames % 15 === 0) leftNeedleTarget = 0.2 + Math.random() * 0.6;
+                leftNeedleCurrent += (leftNeedleTarget - leftNeedleCurrent) * 0.2;
+
+                ctx.beginPath();
+                ctx.moveTo(90, 150); ctx.lineTo(270, 150);
+                ctx.lineWidth = 2; ctx.strokeStyle = mutedColor;
+                ctx.globalAlpha = 0.3; ctx.stroke(); ctx.globalAlpha = 1.0;
+
+                drawGauge(90, 150, 45, leftNeedleCurrent, primaryColor, true, "BRUTAL FACTS", textColor, gaugeBg);
+                
+                ctx.shadowColor = faithColor; ctx.shadowBlur = 10;
+                drawGauge(270, 150, 45, 1.0, faithColor, false, "UNWAVERING FAITH", textColor, gaugeBg);
+                ctx.shadowBlur = 0;
+
+                ctx.fillStyle = textColor;
+                ctx.textAlign = "center";
+                ctx.font = "italic 600 12px 'Lora', serif";
+                ctx.fillText("held simultaneously", WIDTH/2, 195);
+
+                for(let i=0; i<3; i++) {
+                    const t = ((frames + (i * 100)) % 300) / 300;
+                    if (t > 0 && t < 1) {
+                        const px = 90 + (t * 180);
+                        const py = 150 - Math.sin(t * Math.PI) * 20;
+                        ctx.beginPath();
+                        ctx.arc(px, py, 2, 0, Math.PI * 2);
+                        ctx.fillStyle = textColor;
+                        ctx.globalAlpha = Math.sin(t * Math.PI);
+                        ctx.fill();
+                        ctx.globalAlpha = 1.0;
+                    }
+                }
+                requestAnimationFrame(draw);
+            }
+            requestAnimationFrame(draw);
+        })();
+
+        // ==========================================
+        // IDEA 4: The Hedgehog Concept Script
+        // ==========================================
+        (function() {
+            const canvas = document.getElementById('canvasHedgehog');
+            const ctx = canvas.getContext('2d');
+            const WIDTH = 360, HEIGHT = 240, DURATION = 8000;
+            canvas.width = WIDTH; canvas.height = HEIGHT;
+
+            let startTime = null;
+            const targets = [
+                { id: "PASSION",  x: 180, y: 95, colorVar: '--primary' },
+                { id: "BEST AT",  x: 145, y: 145, colorVar: '--secondary' },
+                { id: "ECONOMIC", x: 215, y: 145, colorVar: '--text' }
+            ];
+            const RADIUS = 50;
+
+            function easeInOutCubic(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+
+            function draw(time) {
+                if (!startTime) startTime = time;
+                const elapsed = (time - startTime) % DURATION;
+                const progress = elapsed / DURATION;
+                ctx.clearRect(0, 0, WIDTH, HEIGHT);
+
+                const textColor = getThemeColor('--canvas-text') || '#EBEFF5';
+                const colorMap = {
+                    '--primary': getThemeColor('--primary') || '#ED0A3F',
+                    '--secondary': getThemeColor('--secondary') || '#f67520',
+                    '--text': textColor
+                };
+
+                let moveT = 0, isIntersected = false, glowPulse = 0;
+                if (progress < 0.2) moveT = easeInOutCubic(progress / 0.2);
+                else if (progress < 0.7) {
+                    moveT = 1; isIntersected = true;
+                    glowPulse = Math.abs(Math.sin((progress - 0.2) * Math.PI * 4)); 
+                }
+                else if (progress < 0.9) moveT = 1 - easeInOutCubic((progress - 0.7) / 0.2);
+                else moveT = 0;
+
+                ctx.globalCompositeOperation = 'source-over';
+                
+                targets.forEach((circle, i) => {
+                    const angle = (i * (Math.PI * 2) / 3) - (Math.PI / 2);
+                    const startX = 180 + Math.cos(angle) * 80;
+                    const startY = 120 + Math.sin(angle) * 80;
+                    const cx = startX + (circle.x - startX) * moveT;
+                    const cy = startY + (circle.y - startY) * moveT;
+                    const activeColor = colorMap[circle.colorVar];
+
+                    ctx.beginPath();
+                    ctx.arc(cx, cy, RADIUS, 0, Math.PI * 2);
+                    ctx.fillStyle = activeColor; ctx.globalAlpha = 0.15 + (moveT * 0.1); ctx.fill();
+                    ctx.lineWidth = 2; ctx.strokeStyle = activeColor; ctx.globalAlpha = 0.8; ctx.stroke();
+
+                    ctx.globalAlpha = moveT;
+                    ctx.fillStyle = textColor;
+                    ctx.textAlign = "center"; ctx.textBaseline = "middle";
+                    ctx.font = "600 8px 'Inter', sans-serif";
+                    ctx.fillText(circle.id, cx + Math.cos(angle) * 20, cy + Math.sin(angle) * 20);
+                    ctx.globalAlpha = 1.0;
+                });
+
+                if (isIntersected) {
+                    const centerX = 180, centerY = 128;
+                    ctx.beginPath();
+                    ctx.arc(centerX, centerY, 12 + (glowPulse * 4), 0, Math.PI * 2);
+                    const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, 16);
+                    gradient.addColorStop(0, colorMap['--primary']);
+                    gradient.addColorStop(1, 'transparent');
+                    ctx.fillStyle = gradient; ctx.globalAlpha = 0.8 + (glowPulse * 0.2); ctx.fill();
+                    
+                    ctx.globalAlpha = 1.0;
+                    ctx.fillStyle = textColor;
+                    ctx.font = "800 10px 'Inter', sans-serif";
+                    ctx.fillText("HEDGEHOG", centerX, centerY - 25);
+                    ctx.fillText("CONCEPT", centerX, centerY - 15);
+                }
+                ctx.globalCompositeOperation = 'source-over';
+                requestAnimationFrame(draw);
+            }
+            requestAnimationFrame(draw);
+        })();
+    </script>
+</body>
+</html>

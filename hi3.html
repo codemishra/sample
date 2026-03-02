@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>गुड टू ग्रेट - आगे की चर्चा</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800&family=Lora:ital,wght@0,400;1,600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #fdf7f8;
+            --text: #1a1a1a;
+            --text-muted: #4a4a4a;
+            --primary: #D32F2F; 
+            --secondary: #E64A19;
+            --grid: rgba(0, 0, 0, 0.05);
+            --box-bg: #ffffff;
+            --box-border: rgba(0, 0, 0, 0.1);
+            --box-shadow: rgba(0, 0, 0, 0.1);
+            --canvas-text: #1a1a1a;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0a111a;
+                --text: #EBEFF5;
+                --text-muted: #A0ABC0;
+                --primary: #ED0A3F;
+                --secondary: #f67520;
+                --grid: rgba(255, 255, 255, 0.04);
+                --box-bg: #0a111a;
+                --box-border: rgba(255, 255, 255, 0.1);
+                --box-shadow: rgba(0, 0, 0, 0.8);
+                --canvas-text: #EBEFF5;
+            }
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 24px;
+            display: flex;
+            justify-content: center;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .content-container {
+            max-width: 680px; 
+            width: 100%;
+        }
+
+        h2 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 22px;
+            color: var(--text);
+            margin-top: 40px;
+            margin-bottom: 24px;
+            line-height: 1.4;
+        }
+
+        p {
+            font-family: 'Lora', serif;
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 1.618;
+            color: var(--text);
+            margin-bottom: 24px;
+        }
+
+        .visual-box-container {
+            display: flex;
+            justify-content: center;
+            margin: 40px 0;
+        }
+
+        .visual-box {
+            background-color: var(--box-bg);
+            border-radius: 24px;
+            width: 360px;
+            height: 240px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid var(--box-border);
+            box-shadow: 0 20px 40px var(--box-shadow);
+            background-image: 
+                linear-gradient(var(--grid) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        .status-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-family: 'Inter', sans-serif;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text);
+            opacity: 0.5;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="content-container">
+        
+        <!-- Heading -->
+        <h2>⚙️ छलांग के परे: आलोचनाएँ, गतिशीलता और आधुनिक वास्तविकताएँ</h2>
+
+        <!-- Para 1: Critique -->
+        <p>यद्यपि <em>गुड टू ग्रेट</em> व्यावसायिक साहित्य का एक स्तंभ है, लेकिन यह आलोचनाओं से मुक्त नहीं है। सबसे प्रमुख आलोचना "सर्वाइवरशिप बायस" (survivorship bias) को लेकर है। पुस्तक के प्रकाशन के बाद के दशकों में, इसमें बताई गई कुछ "महान" कंपनियों—विशेष रूप से 'सर्किट सिटी' और 'फैनी मॅई'—को भारी विफलता या दिवालियेपन का सामना करना पड़ा। आलोचकों का तर्क है कि कॉलिन्स की पद्धति ने शायद शाश्वत सिद्धांतों के बजाय केवल अस्थायी बाजार लाभों को महानता मान लिया था। इसके अलावा, कुछ अर्थशास्त्रियों का मानना है कि यह पुस्तक आंतरिक नेतृत्व पर बहुत अधिक और बाहरी आर्थिक परिस्थितियों व भाग्य की भूमिका पर बहुत कम ध्यान देती है।</p>
+
+        <!-- Para 2: Support (The Flywheel) -->
+        <p>इन आलोचनाओं के बावजूद, कॉलिन्स के समर्थक तर्क देते हैं कि किसी कंपनी का महानता से गिरना उन सिद्धांतों को गलत साबित नहीं करता, बल्कि यह दिखाता है कि अनुशासन छोड़ने का परिणाम क्या होता है। इस पुस्तक की सबसे प्रशंसित अवधारणा "फ्लाईव्हील प्रभाव" (The Flywheel Effect) है। कॉलिन्स के अनुसार, परिवर्तन कभी भी एक झटके में नहीं होता। यह एक भारी लोहे के पहिये (flywheel) को घुमाने जैसा है। शुरुआत में इसे हिलाने के लिए बहुत ताकत लगती है और प्रगति धीमी होती है, लेकिन निरंतर प्रयास से यह गति पकड़ता है और अंततः अपनी ही ऊर्जा से बिना रुके घूमने लगता है। अमेज़ॅन (Amazon) जैसी दिग्गज कंपनियों ने इस मॉडल को अपनी सफलता का आधार बनाया है।</p>
+
+        <!-- Visual Box: Flywheel Effect -->
+        <div class="visual-box-container">
+            <div class="visual-box">
+                <div class="status-badge">सिमुलेशन: फ्लाईव्हील प्रभाव</div>
+                <canvas id="hindiFlywheel"></canvas>
+            </div>
+        </div>
+
+        <!-- Para 3: Latest Developments -->
+        <p>आज की तकनीक-प्रधान दुनिया में इन सिद्धांतों को नए सिरे से ढाला जा रहा है। कॉलिन्स ने अपनी बाद की पुस्तकों में यह स्पष्ट किया कि महानता को बनाए रखना उसे हासिल करने से भी कठिन है। आधुनिक संदर्भ में, "हेजहॉग अवधारणा" में अब एआई (AI) और डेटा मेट्रिक्स को शामिल किया जा रहा है। साथ ही, "स्तर 5 नेतृत्व" का अर्थ भी विकसित हुआ है; आज के नेताओं से केवल विनम्रता और संकल्प की ही नहीं, बल्कि डिजिटल समझ और सामाजिक उत्तरदायित्व (ESG) की भी अपेक्षा की जाती है। महानता की ओर ले जाने वाली बस आज इलेक्ट्रिक हो सकती है, लेकिन उसमें सही लोगों को बिठाने का मूल मंत्र आज भी अपरिवर्तित है।</p>
+
+    </div>
+
+    <!-- Canvas Animation Script -->
+    <script>
+        (function() {
+            const canvas = document.getElementById('hindiFlywheel');
+            const ctx = canvas.getContext('2d');
+            const WIDTH = 360, HEIGHT = 240, DURATION = 12000;
+            canvas.width = WIDTH; canvas.height = HEIGHT;
+
+            function getThemeColor(varName) {
+                return getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+            }
+
+            let startTime = null;
+
+            function draw(time) {
+                if (!startTime) startTime = time;
+                const elapsed = (time - startTime) % DURATION;
+                const progress = elapsed / DURATION;
+
+                ctx.clearRect(0, 0, WIDTH, HEIGHT);
+
+                const primaryColor = getThemeColor('--primary');
+                const textColor = getThemeColor('--canvas-text');
+                const centerX = WIDTH / 2, centerY = HEIGHT / 2 + 10;
+                const radius = 60;
+
+                // Speed calculation
+                let speed = 0, energy = 0, phaseText = "";
+                if (progress < 0.25) {
+                    speed = progress * 0.4; energy = 0; phaseText = "निर्माण (धीमी शुरुआत)";
+                } else if (progress < 0.65) {
+                    const lp = (progress - 0.25) / 0.4;
+                    speed = 0.1 + Math.pow(lp, 3) * 6; energy = lp; phaseText = "सफलता (ब्रेकथ्रू)";
+                } else if (progress < 0.85) {
+                    speed = 6.1; energy = 1; phaseText = "निरंतर गति (फ्लाईव्हील)";
+                } else {
+                    const lp = (progress - 0.85) / 0.15;
+                    speed = 6.1 * (1 - lp); energy = 1 - lp; phaseText = "स्थिरता";
+                }
+
+                const angle = time * speed * 0.002;
+
+                // Energy Glow
+                if (energy > 0) {
+                    ctx.beginPath();
+                    ctx.arc(centerX, centerY, radius + 20, 0, Math.PI * 2);
+                    const grad = ctx.createRadialGradient(centerX, centerY, radius, centerX, centerY, radius + 30);
+                    grad.addColorStop(0, primaryColor); grad.addColorStop(1, 'transparent');
+                    ctx.fillStyle = grad; ctx.globalAlpha = energy * 0.3; ctx.fill();
+                    ctx.globalAlpha = 1.0;
+                }
+
+                // Draw Wheel
+                ctx.save();
+                ctx.translate(centerX, centerY);
+                ctx.rotate(angle);
+                
+                ctx.beginPath();
+                ctx.arc(0, 0, radius, 0, Math.PI * 2);
+                ctx.lineWidth = 8; ctx.strokeStyle = textColor; ctx.stroke();
+                
+                ctx.beginPath(); ctx.arc(0, 0, 12, 0, Math.PI * 2); ctx.fillStyle = textColor; ctx.fill();
+
+                for (let i = 0; i < 4; i++) {
+                    ctx.rotate(Math.PI / 2);
+                    ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(radius, 0);
+                    ctx.lineWidth = 4; ctx.stroke();
+                }
+                
+                // Red segment to show spin
+                ctx.beginPath(); ctx.arc(0, 0, radius, 0, Math.PI / 3);
+                ctx.strokeStyle = primaryColor; ctx.lineWidth = 8; ctx.stroke();
+                ctx.restore();
+
+                // Hindi Phase Labels
+                ctx.textAlign = "center";
+                ctx.font = "800 13px 'Inter', sans-serif";
+                ctx.fillStyle = energy > 0.5 ? primaryColor : textColor;
+                ctx.fillText(phaseText, centerX, centerY - 90);
+
+                requestAnimationFrame(draw);
+            }
+            requestAnimationFrame(draw);
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>गुड टू ग्रेट - पृष्ठभूमि</title>
+    
+    <!-- Google Fonts: Inter and Lora -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&family=Lora:wght@400&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Light Mode Colors */
+            --bg: #fdf7f8;
+            --text: #1a1a1a;
+            --primary: #D32F2F; 
+            --grid: rgba(0, 0, 0, 0.05);
+            --box-bg: #ffffff;
+            --box-border: rgba(0, 0, 0, 0.1);
+            --box-shadow: rgba(0, 0, 0, 0.1);
+            --canvas-text: #1a1a1a;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                /* Dark Mode Colors */
+                --bg: #0a111a;
+                --text: #EBEFF5;
+                --primary: #ED0A3F;
+                --grid: rgba(255, 255, 255, 0.04);
+                --box-bg: #0a111a;
+                --box-border: rgba(255, 255, 255, 0.1);
+                --box-shadow: rgba(0, 0, 0, 0.8);
+                --canvas-text: #EBEFF5;
+            }
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 24px;
+            display: flex;
+            justify-content: center;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .content-container {
+            max-width: 680px;
+            width: 100%;
+        }
+
+        h2 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 22px;
+            line-height: 1.4;
+            margin-top: 40px;
+            margin-bottom: 24px;
+        }
+
+        p {
+            font-family: 'Lora', serif;
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 1.618;
+            margin-bottom: 24px;
+        }
+
+        .visual-box-container {
+            display: flex;
+            justify-content: center;
+            margin: 40px 0;
+        }
+
+        .visual-box {
+            background-color: var(--box-bg);
+            border-radius: 24px;
+            width: 360px;
+            height: 240px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid var(--box-border);
+            box-shadow: 0 20px 40px var(--box-shadow);
+            background-image: 
+                linear-gradient(var(--grid) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        .status-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-family: 'Inter', sans-serif;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text);
+            opacity: 0.5;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="content-container">
+        
+        <!-- Hindi Background Heading -->
+        <h2>असाधारण छलांग की खोज: क्यों 'अच्छा' होना 'महान' होने का दुश्मन है</h2>
+
+        <p>एक आरामदायक जाल है जो अधिकांश संगठनों, नेताओं और व्यक्तियों को अपनी चपेट में ले लेता है: "अच्छा" होने का जाल। जब संचालन लाभदायक होता है, विकास स्थिर होता है, और ग्राहक काफी हद तक संतुष्ट होते हैं, तो बदलाव की बहुत कम आवश्यकता महसूस होती है। हालाँकि, जिम कॉलिन्स ने अपने मौलिक कार्य की शुरुआत एक क्रांतिकारी आधार के साथ की: "'अच्छा' होना 'महान' होने का दुश्मन है।" अधिकांश कंपनियां कभी भी महानता हासिल नहीं कर पातीं क्योंकि पूरी तरह से स्वीकार्य स्तर की अच्छाई पर बस जाना बहुत आसान होता है। <em>गुड टू ग्रेट</em> का जन्म एक जुनूनी प्रश्न से हुआ था: क्या एक मात्र अच्छी कंपनी एक महान कंपनी बन सकती है, और यदि हाँ, तो उस परिवर्तन की सटीक प्रक्रिया क्या है?</p>
+
+        <p>जो बात इस पुस्तक को अनगिनत अन्य प्रबंधन सिद्धांतों से अलग करती है, वह है डेटा के प्रति इसका कट्टर समर्पण। कॉलिन्स और उनकी शोध टीम ने किसी पहले से सोचे हुए सिद्धांत से शुरुआत नहीं की। इसके बजाय, उन्होंने 1,435 कंपनियों का पांच साल तक गहन अध्ययन किया। उन्होंने एक बहुत ही विशिष्ट पैटर्न की तलाश की: वह कंपनी जिसने 15 वर्षों तक बाजार के औसत प्रदर्शन को बनाए रखा, फिर एक निर्णायक मोड़ (transition point) आया, और अगले 15 वर्षों में बाजार से कम से कम तीन गुना बेहतर रिटर्न दिया। उन्होंने प्रत्येक सफल कंपनी की तुलना उसी उद्योग की एक ऐसी कंपनी से की जो छलांग लगाने में विफल रही, ताकि वे उन सटीक कारणों को खोज सकें जो महानता की नींव रखते हैं।</p>
+
+        <!-- Visual Box with Hindi Labels -->
+        <div class="visual-box-container">
+            <div class="visual-box">
+                <div class="status-badge">सिमुलेशन: विकास का पथ</div>
+                <canvas id="hindiCanvasBackground"></canvas>
+            </div>
+        </div>
+
+        <p>इस पुस्तक को पढ़कर, आप हजारों घंटों के विश्लेषण से निकले उस ज्ञान को समझ रहे हैं, जो करिश्माई सीईओ और रातों-रात मिलने वाली सफलता के मिथकों को तोड़ता है। रातों-रात सफलता के शोर वाले इस युग में, <em>गुड टू ग्रेट</em> हमें उन सिद्धांतों पर वापस ले जाती है जो समय की कसौटी पर खरे उतरे हैं। यह पुस्तक हमें सिखाती है कि महानता केवल परिस्थितियों का खेल नहीं है, बल्कि यह सचेत विकल्पों और अटूट अनुशासन का परिणाम है। चाहे आप एक स्टार्टअप चला रहे हों या अपने करियर को नई ऊंचाइयों पर ले जाना चाहते हों, यह मार्गदर्शिका औसत दर्जे से ऊपर उठने का एक ठोस खाका (blueprint) प्रदान करती है।</p>
+
+    </div>
+
+    <script>
+        (function() {
+            const canvas = document.getElementById('hindiCanvasBackground');
+            const ctx = canvas.getContext('2d');
+            const WIDTH = 360, HEIGHT = 240, DURATION = 8000;
+            canvas.width = WIDTH; canvas.height = HEIGHT;
+
+            function getThemeColor(varName) {
+                return getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+            }
+
+            let startTime = null;
+
+            function draw(time) {
+                if (!startTime) startTime = time;
+                const elapsed = (time - startTime) % DURATION;
+                const progress = elapsed / DURATION;
+
+                ctx.clearRect(0, 0, WIDTH, HEIGHT);
+
+                const primaryColor = getThemeColor('--primary') || '#ED0A3F';
+                const textColor = getThemeColor('--canvas-text') || '#EBEFF5';
+                const startY = 180;
+
+                // 1. "Good" Company Line (Stagnant)
+                ctx.beginPath();
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = textColor;
+                ctx.globalAlpha = 0.2;
+                ctx.moveTo(0, startY);
+                for (let x = 0; x <= WIDTH; x += 5) {
+                    const y = startY - (x * 0.05) + Math.sin(x * 0.1 + time * 0.002) * 2;
+                    ctx.lineTo(x, y);
+                }
+                ctx.stroke();
+                ctx.globalAlpha = 1.0;
+
+                // 2. "Great" Company Line (The Leap)
+                const currentDrawEnd = progress * WIDTH * 1.2; 
+                ctx.beginPath();
+                ctx.lineWidth = 4;
+                ctx.strokeStyle = primaryColor;
+                ctx.lineCap = "round";
+                
+                let lastX = 0, lastY = startY;
+                ctx.moveTo(0, startY);
+                for (let x = 0; x <= WIDTH; x += 2) {
+                    if (x > currentDrawEnd) break;
+                    let y;
+                    if (x < 120) { y = startY - (x * 0.05); } 
+                    else {
+                        const transitionX = x - 120;
+                        y = (startY - 6) - Math.pow(transitionX * 0.06, 2); 
+                    }
+                    ctx.lineTo(x, y);
+                    lastX = x; lastY = y;
+                }
+                ctx.stroke();
+
+                // Hindi Labels in Canvas
+                ctx.textAlign = "left";
+                ctx.font = "600 14px 'Inter', sans-serif";
+                
+                if (progress > 0.1) {
+                    ctx.fillStyle = textColor;
+                    ctx.globalAlpha = 0.5;
+                    ctx.fillText("अच्छा", 280, 165); // "Good"
+                }
+
+                if (progress > 0.4) {
+                    ctx.fillStyle = primaryColor;
+                    ctx.globalAlpha = Math.min(1, (progress - 0.4) * 4);
+                    ctx.fillText("महान", 280, 45); // "Great"
+                }
+                ctx.globalAlpha = 1.0;
+
+                requestAnimationFrame(draw);
+            }
+            requestAnimationFrame(draw);
+        })();
+    </script>
+</body>
+</html>
