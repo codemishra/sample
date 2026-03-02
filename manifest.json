@@ -1,10 +1,10 @@
 {
-  "name": "My Language App",
+  "name": "Multi-Lang WebApp",
   "short_name": "LangApp",
   "start_url": "index.html",
   "display": "standalone",
   "background_color": "#0A111A",
-  "theme_color": "#ED0B3F",
+  "theme_color": "#ed0b3f",
   "icons": [
     {
       "src": "https://cdn-icons-png.flaticon.com/512/1160/1160358.png",
