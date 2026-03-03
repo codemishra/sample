@@ -162,18 +162,14 @@
         const colors = theme === 'dark' ? 
             { bg: '#0A111A', text: '#ffffff', box: '#0A111A', grid: 'rgba(255,255,255,0.04)', primary: '#ed0b3f' } : 
             { bg: '#FDF7F8', text: '#1a1a1a', box: '#ffffff', grid: 'rgba(0,0,0,0.05)', primary: '#D32F2F' };
-    
+
         const css = `
             :root {
                 --bg: ${colors.bg} !important; --text: ${colors.text} !important;
                 --box-bg: ${colors.box} !important; --grid: ${colors.grid} !important;
                 --canvas-text: ${colors.text} !important; --primary: ${colors.primary} !important;
             }
-            body { 
-                background-color: var(--bg) !important; 
-                color: var(--text) !important; 
-                padding-top: 10px !important; /* Forces the text to move up */
-            }
+            body { background-color: var(--bg) !important; color: var(--text) !important; }
         `;
         try {
             const doc = frame.contentDocument || frame.contentWindow.document;
@@ -182,7 +178,6 @@
             style.textContent = css;
         } catch (e) {}
     }
-
     // 2. MAIN NAVIGATION
     function updateUI() {
         document.getElementById('content-frame').src = config[currentLang].pages[currentPage - 1];
