@@ -28,81 +28,62 @@
         * { box-sizing: border-box; }
         body, html { 
             font-family: -apple-system, system-ui, sans-serif; 
-            margin: 0; padding: 0;
-            height: 100vh; width: 100vw;
-            background: var(--bg); color: var(--text);
-            overflow: hidden; 
+            margin: 0; padding: 0; height: 100%; width: 100%;
+            background: var(--bg); color: var(--text); overflow: hidden; 
         }
         
-        /* --- FULL SCREEN LAYOUT FIX --- */
-        #main-view { 
-            display: flex; flex-direction: column; 
-            height: 100vh; width: 100%; 
-            position: relative;
-        }
+        /* --- LAYOUT FIX (PREVENTS SQUEEZING) --- */
+        #main-view { display: flex; flex-direction: column; height: 100vh; width: 100%; }
 
         header { 
-            flex: 0 0 auto; background: var(--bg); border-bottom: 1px solid var(--border); 
-            padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; 
+            flex: 0 0 60px; background: var(--bg); border-bottom: 1px solid var(--border); 
+            padding: 0 15px; display: flex; justify-content: space-between; align-items: center; 
         }
-        .logo { font-weight: 800; color: var(--primary); font-size: 1rem; letter-spacing: 1px; }
-        .controls { display: flex; gap: 10px; }
+        .logo { font-weight: 800; color: var(--primary); font-size: 1rem; }
+        .controls { display: flex; gap: 8px; }
         
         .icon-btn { 
             background: var(--surface); border: 1px solid var(--border); 
-            cursor: pointer; padding: 8px; border-radius: 10px; 
-            display: flex; align-items: center; color: var(--text);
-            transition: all 0.2s;
+            cursor: pointer; padding: 6px; border-radius: 8px; color: var(--text);
         }
-        .icon-btn svg { width: 22px; height: 22px; fill: currentColor; }
+        .icon-btn svg { width: 20px; height: 20px; fill: currentColor; }
 
-        nav { 
-            flex: 0 0 auto; display: flex; background: var(--bg); border-bottom: 1px solid var(--border); 
-        }
+        nav { flex: 0 0 50px; display: flex; background: var(--bg); border-bottom: 1px solid var(--border); }
         nav button { 
-            flex: 1; padding: 15px 5px; border: none; cursor: pointer; 
-            background: none; color: var(--text-dim); font-weight: 700; font-size: 0.8rem;
+            flex: 1; border: none; cursor: pointer; background: none; 
+            color: var(--text-dim); font-weight: 700; font-size: 0.75rem;
             border-bottom: 3px solid transparent; 
         }
         nav button.active { border-bottom: 3px solid var(--primary); color: var(--primary); }
 
-        /* The Iframe now correctly fills 100% of the remaining vertical space */
-        #content-frame { 
-            flex: 1 1 auto; border: none; width: 100%; height: 100%; 
-            background: white; 
-        }
+        /* Full Screen Content Box */
+        #content-frame { flex: 1; border: none; width: 100%; height: 100%; background: white; }
 
-        /* --- FLOATING ACTION BUTTON --- */
+        /* --- FAB --- */
         .fab { 
             position: absolute; bottom: 25px; right: 25px; 
             background: var(--primary); color: white; border: none; 
             border-radius: 50%; width: 60px; height: 60px; 
             box-shadow: 0 8px 20px rgba(237, 11, 63, 0.4); z-index: 1000;
             display: flex; align-items: center; justify-content: center;
-            cursor: pointer;
         }
 
         /* --- CHAT OVERLAY --- */
         #chat-view { 
-            display: none; flex-direction: column; height: 100vh; width: 100%; 
+            display: none; flex-direction: column; height: 100%; width: 100%; 
             position: absolute; top: 0; left: 0; background: var(--bg); z-index: 2000; 
         }
-        .chat-header { flex: 0 0 auto; background: var(--surface); padding: 15px; display: flex; align-items: center; border-bottom: 1px solid var(--border); }
-        .chat-body { flex: 1 1 auto; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; }
+        .chat-header { flex: 0 0 60px; background: var(--surface); padding: 0 15px; display: flex; align-items: center; border-bottom: 1px solid var(--border); }
+        .chat-body { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 15px; }
         
-        /* Markdown Styling for AI */
-        .chat-msg { max-width: 90%; border-radius: 18px; font-size: 1rem; line-height: 1.6; }
-        .msg-user { align-self: flex-end; background: var(--primary); color: white; padding: 12px 18px; }
-        .msg-bot { align-self: flex-start; background: var(--surface); color: var(--text); border: 1px solid var(--border); padding: 5px 20px; }
+        /* Markdown Styling */
+        .chat-msg { max-width: 90%; border-radius: 18px; font-size: 0.95rem; line-height: 1.5; }
+        .msg-user { align-self: flex-end; background: var(--primary); color: white; padding: 10px 15px; }
+        .msg-bot { align-self: flex-start; background: var(--surface); color: var(--text); border: 1px solid var(--border); padding: 5px 15px; }
+        .msg-bot h1, .msg-bot h2 { color: var(--primary); margin: 10px 0; font-size: 1.1rem; }
         
-        /* AI Content Styles */
-        .msg-bot h1, .msg-bot h2, .msg-bot h3 { color: var(--primary); margin: 15px 0 10px 0; }
-        .msg-bot p { margin-bottom: 10px; }
-        .msg-bot ul, .msg-bot ol { padding-left: 20px; margin-bottom: 10px; }
-        .msg-bot code { background: rgba(237,11,63,0.1); padding: 2px 5px; border-radius: 4px; font-family: monospace; }
-
-        .chat-footer { flex: 0 0 auto; padding: 15px; background: var(--surface); border-top: 1px solid var(--border); display: flex; gap: 10px; }
-        .chat-input { flex: 1; background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 12px 20px; border-radius: 25px; outline: none; }
+        .chat-footer { flex: 0 0 70px; padding: 10px; background: var(--surface); border-top: 1px solid var(--border); display: flex; gap: 8px; }
+        .chat-input { flex: 1; background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 0 15px; border-radius: 25px; outline: none; }
     </style>
 </head>
 <body>
@@ -130,15 +111,15 @@
 
 <div id="chat-view">
     <div class="chat-header">
-        <button onclick="toggleChat(false)" style="background:none; border:none; color:var(--text); font-weight:bold; cursor:pointer;">← EXIT CHAT</button>
-        <button onclick="setupKey()" style="margin-left:auto; background:var(--primary); border:none; color:white; padding:6px 12px; border-radius:8px; font-size:0.7rem;">SET API KEY</button>
+        <button onclick="toggleChat(false)" style="background:none; border:none; color:var(--text); font-weight:bold; cursor:pointer;">← EXIT</button>
+        <button onclick="setupKey()" style="margin-left:auto; background:var(--primary); border:none; color:white; padding:6px 10px; border-radius:6px; font-size:0.7rem;">SET API KEY</button>
     </div>
-    <div class="chat-body" id="chat-box">
-        <div class="chat-msg msg-bot"><p>Hi! I've analyzed your book's content. I'm running on <b>Gemini 3 Flash</b>. Ask me anything about the text or the world!</p></div>
+    <div class="chat-box chat-body" id="chat-box">
+        <div class="chat-msg msg-bot">Hi! I am <b>Gemini 3 Flash</b>. I have the context of your book files. Ask me anything!</div>
     </div>
     <div class="chat-footer">
-        <input type="text" id="chat-input" class="chat-input" placeholder="Ask a question..." onkeypress="if(event.key==='Enter')sendMessage()">
-        <button onclick="sendMessage()" style="background:var(--primary); color:white; border:none; border-radius:50%; width:45px; height:45px; cursor:pointer;">➤</button>
+        <input type="text" id="chat-input" class="chat-input" placeholder="Type a message..." onkeypress="if(event.key==='Enter')sendMessage()">
+        <button onclick="sendMessage()" style="background:var(--primary); border:none; border-radius:50%; width:45px; height:45px; cursor:pointer; color:white;">➤</button>
     </div>
 </div>
 
@@ -151,23 +132,24 @@
     };
     let currentLang = 'en', currentPage = 1, bookContext = "";
 
-    // 1. IMPROVED CONTEXT ENGINE
+    // 1. IMPROVED CONTEXT LOADER
     async function loadBookContext() {
-        let text = "Book Content Analysis:\n";
+        let text = "Book Data Context for AI:\n";
         const files = [...config.en.pages, ...config.hi.pages];
         for (let f of files) {
             try {
                 const res = await fetch(f);
-                const html = await res.text();
-                // Strip tags & excess whitespace
-                const clean = html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
-                text += `\n[FILE: ${f}]\n${clean}\n`;
-            } catch (e) {}
+                if (res.ok) {
+                    const html = await res.text();
+                    const clean = html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+                    text += `\n[FILE: ${f}]\n${clean}\n`;
+                }
+            } catch (e) { console.error("Error loading context for " + f); }
         }
         bookContext = text;
     }
 
-    // 2. UI & THEME
+    // 2. THEME & NAVIGATION
     function toggleTheme() {
         const root = document.documentElement;
         root.setAttribute('data-theme', root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
@@ -175,11 +157,10 @@
 
     function updateUI() {
         document.getElementById('content-frame').src = config[currentLang].pages[currentPage - 1];
-        const audio = document.getElementById('audioPlayer');
-        const wasPlaying = !audio.paused;
-        audio.src = config[currentLang].audio;
-        audio.load();
-        if (wasPlaying) audio.play();
+        const a = document.getElementById('audioPlayer');
+        const wasPlaying = !a.paused;
+        a.src = config[currentLang].audio;
+        a.load(); if (wasPlaying) a.play();
         document.querySelectorAll('.tab').forEach((btn, i) => btn.classList.toggle('active', i === (currentPage - 1)));
     }
 
@@ -197,11 +178,11 @@
     }
 
     function setupKey() {
-        const k = prompt("Enter Gemini API Key:");
-        if(k) localStorage.setItem('gemini_key', k);
+        const k = prompt("Paste your Gemini API Key:");
+        if(k) { localStorage.setItem('gemini_key', k); alert("Key Saved."); }
     }
 
-    // 3. CORRECT GEMINI 3 FLASH API CALL
+    // 3. CORRECTED API CALL FOR GEMINI 3 FLASH
     async function sendMessage() {
         const key = localStorage.getItem('gemini_key');
         if(!key) return setupKey();
@@ -212,20 +193,33 @@
         input.value = '';
 
         try {
-            // Using the current stable 2026 endpoint for Gemini 3 Flash
+            // Updated model string to the standard 'gemini-3-flash'
             const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash:generateContent?key=${key}`;
-            const res = await fetch(url, {
+            
+            const response = await fetch(url, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    contents: [{ parts: [{ text: bookContext + "\n\nUser Question: " + text }] }],
-                    generationConfig: { temperature: 0.7, maxOutputTokens: 2000 }
+                    contents: [{ parts: [{ text: bookContext + "\n\nUser Question: " + text }] }]
                 })
             });
-            const data = await res.json();
-            const reply = data.candidates[0].content.parts[0].text;
-            addMsg(reply, 'bot');
-        } catch (e) { addMsg("**Error:** Could not connect to Gemini 3 Flash. Verify your API key and network.", 'bot'); }
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error?.message || `Status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            if (data.candidates && data.candidates[0].content) {
+                const reply = data.candidates[0].content.parts[0].text;
+                addMsg(reply, 'bot');
+            } else {
+                throw new Error("No candidates found in response.");
+            }
+        } catch (e) { 
+            console.error(e);
+            addMsg(`**API ERROR:** ${e.message}. (Try checking if your API key has access to 'gemini-3-flash' or try 'gemini-1.5-flash' if your key is older.)`, 'bot'); 
+        }
     }
 
     function addMsg(t, s) {
