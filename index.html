@@ -15,6 +15,8 @@
             --text: #ffffff;
             --text-dim: #94a3b8;
             --border: #1e293b;
+            --iframe-bg: #0A111A;
+            --iframe-text: #ffffff;
         }
         [data-theme="light"] {
             --bg: #FDF7F8;
@@ -22,6 +24,8 @@
             --text: #0f172a;
             --text-dim: #64748b;
             --border: #e2e8f0;
+            --iframe-bg: #FDF7F8;
+            --iframe-text: #0f172a;
         }
         :root { --primary: #ed0b3f; }
 
@@ -55,7 +59,8 @@
         }
         nav button.active { border-bottom: 3px solid var(--primary); color: var(--primary); }
 
-        #content-frame { flex: 1; border: none; width: 100%; height: 100%; background: white; }
+        /* The Iframe Container */
+        #content-frame { flex: 1; border: none; width: 100%; height: 100%; background: var(--bg); transition: background 0.3s; }
 
         .fab { 
             position: absolute; bottom: 25px; right: 25px; 
@@ -65,25 +70,14 @@
             display: flex; align-items: center; justify-content: center;
         }
 
-        /* --- CHAT OVERLAY --- */
-        #chat-view { 
-            display: none; flex-direction: column; height: 100%; width: 100%; 
-            position: absolute; top: 0; left: 0; background: var(--bg); z-index: 2000; 
-        }
+        #chat-view { display: none; flex-direction: column; height: 100%; width: 100%; position: absolute; top: 0; left: 0; background: var(--bg); z-index: 2000; }
         .chat-header { flex: 0 0 60px; background: var(--surface); padding: 0 15px; display: flex; align-items: center; border-bottom: 1px solid var(--border); }
         .chat-body { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 15px; scroll-behavior: smooth;}
-        
         .chat-msg { max-width: 90%; border-radius: 18px; font-size: 0.95rem; line-height: 1.5; word-wrap: break-word; }
         .msg-user { align-self: flex-end; background: var(--primary); color: white; padding: 10px 15px; }
         .msg-bot { align-self: flex-start; background: var(--surface); color: var(--text); border: 1px solid var(--border); padding: 5px 15px; }
-        
-        /* Thinking Indicator */
-        .thinking {
-            font-style: italic; color: var(--text-dim); font-size: 0.8rem; padding: 5px 15px;
-            animation: pulse 1.5s infinite;
-        }
+        .thinking { font-style: italic; color: var(--text-dim); font-size: 0.8rem; padding: 5px 15px; animation: pulse 1.5s infinite; }
         @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
-
         .chat-footer { flex: 0 0 70px; padding: 10px; background: var(--surface); border-top: 1px solid var(--border); display: flex; gap: 8px; }
         .chat-input { flex: 1; background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 0 15px; border-radius: 25px; outline: none; }
     </style>
@@ -107,7 +101,8 @@
         <button class="tab" onclick="changePage(2)">Main Ideas</button>
         <button class="tab" onclick="changePage(3)">Further Discussions</button>
     </nav>
-    <iframe id="content-frame"></iframe>
+    <!-- ADDED onload TO IFRAME -->
+    <iframe id="content-frame" onload="applyThemeToIframe()"></iframe>
     <button class="fab" onclick="toggleChat(true)"><svg viewBox="0 0 24 24" width="30" fill="white"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg></button>
 </div>
 
@@ -150,9 +145,42 @@
         bookContext = text;
     }
 
+    // --- UPDATED THEME LOGIC ---
     function toggleTheme() {
         const root = document.documentElement;
-        root.setAttribute('data-theme', root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+        const newTheme = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', newTheme);
+        applyThemeToIframe(); // Apply immediately to current iframe
+    }
+
+    // --- NEW FUNCTION TO INJECT STYLES INTO IFRAME ---
+    function applyThemeToIframe() {
+        const frame = document.getElementById('content-frame');
+        const theme = document.documentElement.getAttribute('data-theme');
+        
+        // CSS to inject
+        const bgColor = theme === 'dark' ? '#0A111A' : '#FDF7F8';
+        const textColor = theme === 'dark' ? '#ffffff' : '#0f172a';
+        
+        const styleTag = `
+            <style id="theme-injector">
+                body { background-color: ${bgColor} !important; color: ${textColor} !important; transition: background 0.3s, color 0.3s; }
+                /* Ensure all text inside the iframe follows the theme */
+                p, div, h1, h2, h3, h4, span, li { color: ${textColor} !important; }
+            </style>
+        `;
+
+        try {
+            const doc = frame.contentDocument || frame.contentWindow.document;
+            // Remove old injected style if it exists
+            const oldStyle = doc.getElementById('theme-injector');
+            if (oldStyle) oldStyle.remove();
+            
+            // Inject new style
+            doc.head.insertAdjacentHTML('beforeend', styleTag);
+        } catch (e) {
+            console.error("Could not inject theme into iframe (Cross-origin policy or loading issue)");
+        }
     }
 
     function updateUI() {
@@ -192,7 +220,6 @@
         return d;
     }
 
-    // 3. ENHANCED STREAMING & THINKING LOGIC
     async function sendMessage() {
         const key = localStorage.getItem('gemini_key');
         if(!key) return setupKey();
@@ -202,13 +229,11 @@
         addMsg(text, 'user');
         input.value = '';
 
-        // Add "Thinking..." indicator
         const thinking = document.createElement('div');
         thinking.className = 'thinking';
         thinking.innerText = 'AI is thinking...';
         document.getElementById('chat-box').appendChild(thinking);
         
-        // Prepare the bot bubble for streaming
         let fullResponse = "";
         const botBubble = addMsg("", 'bot');
 
@@ -227,8 +252,6 @@
 
             const reader = response.body.getReader();
             const decoder = new TextDecoder();
-            
-            // Remove thinking indicator as soon as stream starts
             thinking.remove();
 
             while (true) {
@@ -245,7 +268,6 @@
                             const delta = json.candidates[0].content.parts[0].text;
                             if (delta) {
                                 fullResponse += delta;
-                                // Live render markdown
                                 botBubble.innerHTML = marked.parse(fullResponse);
                                 document.getElementById('chat-box').scrollTop = document.getElementById('chat-box').scrollHeight;
                             }
@@ -254,7 +276,7 @@
                 }
             }
         } catch (e) { 
-            thinking.remove();
+            if (thinking) thinking.remove();
             botBubble.innerText = "Error: " + e.message; 
         }
     }
