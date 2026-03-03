@@ -17,7 +17,7 @@
             --border: #1e293b;
         }
         [data-theme="light"] {
-            --bg: #FDF7F8; /* Requested Light Mode Color */
+            --bg: #FDF7F8;
             --surface: #ffffff;
             --text: #0f172a;
             --text-dim: #64748b;
@@ -32,7 +32,6 @@
             background: var(--bg); color: var(--text); overflow: hidden; 
         }
         
-        /* --- LAYOUT FIX (PREVENTS SQUEEZING) --- */
         #main-view { display: flex; flex-direction: column; height: 100vh; width: 100%; }
 
         header { 
@@ -56,10 +55,8 @@
         }
         nav button.active { border-bottom: 3px solid var(--primary); color: var(--primary); }
 
-        /* Full Screen Content Box */
         #content-frame { flex: 1; border: none; width: 100%; height: 100%; background: white; }
 
-        /* --- FAB --- */
         .fab { 
             position: absolute; bottom: 25px; right: 25px; 
             background: var(--primary); color: white; border: none; 
@@ -74,14 +71,19 @@
             position: absolute; top: 0; left: 0; background: var(--bg); z-index: 2000; 
         }
         .chat-header { flex: 0 0 60px; background: var(--surface); padding: 0 15px; display: flex; align-items: center; border-bottom: 1px solid var(--border); }
-        .chat-body { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 15px; }
+        .chat-body { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 15px; scroll-behavior: smooth;}
         
-        /* Markdown Styling */
-        .chat-msg { max-width: 90%; border-radius: 18px; font-size: 0.95rem; line-height: 1.5; }
+        .chat-msg { max-width: 90%; border-radius: 18px; font-size: 0.95rem; line-height: 1.5; word-wrap: break-word; }
         .msg-user { align-self: flex-end; background: var(--primary); color: white; padding: 10px 15px; }
         .msg-bot { align-self: flex-start; background: var(--surface); color: var(--text); border: 1px solid var(--border); padding: 5px 15px; }
-        .msg-bot h1, .msg-bot h2 { color: var(--primary); margin: 10px 0; font-size: 1.1rem; }
         
+        /* Thinking Indicator */
+        .thinking {
+            font-style: italic; color: var(--text-dim); font-size: 0.8rem; padding: 5px 15px;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
+
         .chat-footer { flex: 0 0 70px; padding: 10px; background: var(--surface); border-top: 1px solid var(--border); display: flex; gap: 8px; }
         .chat-input { flex: 1; background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 0 15px; border-radius: 25px; outline: none; }
     </style>
@@ -112,10 +114,10 @@
 <div id="chat-view">
     <div class="chat-header">
         <button onclick="toggleChat(false)" style="background:none; border:none; color:var(--text); font-weight:bold; cursor:pointer;">← EXIT</button>
-        <button onclick="setupKey()" style="margin-left:auto; background:var(--primary); border:none; color:white; padding:6px 10px; border-radius:6px; font-size:0.7rem;">SET API KEY</button>
+        <button onclick="setupKey()" style="margin-left:auto; background:var(--primary); border:none; color:white; padding:6px 12px; border-radius:6px; font-size:0.7rem;">SET API KEY</button>
     </div>
     <div class="chat-box chat-body" id="chat-box">
-        <div class="chat-msg msg-bot">Hi! I am <b>Gemini 3 Flash</b>. I have the context of your book files. Ask me anything!</div>
+        <div class="chat-msg msg-bot">Hi! I am <b>Gemini 3 Flash</b>. Ask me anything about the text!</div>
     </div>
     <div class="chat-footer">
         <input type="text" id="chat-input" class="chat-input" placeholder="Type a message..." onkeypress="if(event.key==='Enter')sendMessage()">
@@ -132,9 +134,8 @@
     };
     let currentLang = 'en', currentPage = 1, bookContext = "";
 
-    // 1. IMPROVED CONTEXT LOADER
     async function loadBookContext() {
-        let text = "Book Data Context for AI:\n";
+        let text = "Book Data Context:\n";
         const files = [...config.en.pages, ...config.hi.pages];
         for (let f of files) {
             try {
@@ -149,7 +150,6 @@
         bookContext = text;
     }
 
-    // 2. THEME & NAVIGATION
     function toggleTheme() {
         const root = document.documentElement;
         root.setAttribute('data-theme', root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
@@ -182,7 +182,17 @@
         if(k) { localStorage.setItem('gemini_key', k); alert("Key Saved."); }
     }
 
-    // 3. CORRECTED API CALL FOR GEMINI 3 FLASH
+    function addMsg(t, s, id = null) {
+        const b = document.getElementById('chat-box'), d = document.createElement('div');
+        d.className = `chat-msg msg-${s}`;
+        if (id) d.id = id;
+        d.innerHTML = s === 'bot' ? marked.parse(t) : t;
+        b.appendChild(d);
+        b.scrollTop = b.scrollHeight;
+        return d;
+    }
+
+    // 3. ENHANCED STREAMING & THINKING LOGIC
     async function sendMessage() {
         const key = localStorage.getItem('gemini_key');
         if(!key) return setupKey();
@@ -192,9 +202,18 @@
         addMsg(text, 'user');
         input.value = '';
 
+        // Add "Thinking..." indicator
+        const thinking = document.createElement('div');
+        thinking.className = 'thinking';
+        thinking.innerText = 'AI is thinking...';
+        document.getElementById('chat-box').appendChild(thinking);
+        
+        // Prepare the bot bubble for streaming
+        let fullResponse = "";
+        const botBubble = addMsg("", 'bot');
+
         try {
-            // Updated model string to the standard 'gemini-3-flash'
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${key}`;
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:streamGenerateContent?alt=sse&key=${key}`;
             
             const response = await fetch(url, {
                 method: "POST",
@@ -204,30 +223,40 @@
                 })
             });
 
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error?.message || `Status: ${response.status}`);
-            }
+            if (!response.ok) throw new Error("API Connection Failed");
 
-            const data = await response.json();
-            if (data.candidates && data.candidates[0].content) {
-                const reply = data.candidates[0].content.parts[0].text;
-                addMsg(reply, 'bot');
-            } else {
-                throw new Error("No candidates found in response.");
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder();
+            
+            // Remove thinking indicator as soon as stream starts
+            thinking.remove();
+
+            while (true) {
+                const { value, done } = await reader.read();
+                if (done) break;
+                
+                const chunk = decoder.decode(value);
+                const lines = chunk.split("\n");
+                
+                for (const line of lines) {
+                    if (line.startsWith("data: ")) {
+                        try {
+                            const json = JSON.parse(line.substring(6));
+                            const delta = json.candidates[0].content.parts[0].text;
+                            if (delta) {
+                                fullResponse += delta;
+                                // Live render markdown
+                                botBubble.innerHTML = marked.parse(fullResponse);
+                                document.getElementById('chat-box').scrollTop = document.getElementById('chat-box').scrollHeight;
+                            }
+                        } catch (e) {}
+                    }
+                }
             }
         } catch (e) { 
-            console.error(e);
-            addMsg(`**API ERROR:** ${e.message}. (Try checking if your API key has access to 'gemini-3-flash' or try 'gemini-1.5-flash' if your key is older.)`, 'bot'); 
+            thinking.remove();
+            botBubble.innerText = "Error: " + e.message; 
         }
-    }
-
-    function addMsg(t, s) {
-        const b = document.getElementById('chat-box'), d = document.createElement('div');
-        d.className = `chat-msg msg-${s}`;
-        d.innerHTML = s === 'bot' ? marked.parse(t) : t;
-        b.appendChild(d);
-        b.scrollTop = b.scrollHeight;
     }
 
     window.onload = () => { updateUI(); loadBookContext(); };
