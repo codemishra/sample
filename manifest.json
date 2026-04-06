@@ -1,6 +1,6 @@
 {
-  "name": "Multi-Lang WebApp",
-  "short_name": "LangApp",
+  "name": "GR",
+  "short_name": "GR",
   "start_url": "index.html",
   "display": "standalone",
   "background_color": "#0A111A",
